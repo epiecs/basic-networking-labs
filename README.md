@@ -8,7 +8,12 @@ Voor sommige van deze oefeningen ga je gebruik maken van een netwerk simulator. 
 
 ![Een voorbeeld van een netwerk in GNS3](resources/images/gns3-network-example.png)
 
-Met GNS3 ben je ook niet beperkt in de schaal van je netwerk dat je wenst te bouwen. Zolang je genoeg resources vrij hebt op je computer kom je al een heel eind. Hoe je GNS3 moet installeren en configureren vind je terug in de `installation` map. Er is een guide beschikbaar voor [VmWare](installation/vmware.md) en [Virtualbox](installation/virtualbox.md).
+Met GNS3 ben je ook niet beperkt in de schaal van je netwerk dat je wenst te bouwen. Zolang je genoeg resources vrij hebt op je computer kom je al een heel eind. 
+
+# Installatie van GNS3
+Hoe je GNS3 moet installeren en configureren vind je terug in de [installatie gids](installation/gns3.md). 
+
+De gids heeft zowel instructies voor VmWare workstation en Virtualbox.
 
 ## Nodige software en images
 
