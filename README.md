@@ -26,36 +26,36 @@ Indien je nog geen ervaring hebt met GNS3 is het aan te raden eerst het introduc
 -   01 - Wat is een netwerk
     - [Lab-01-01](labs/hoofdstuk-01/lab-01-01.md) 
 -   02 - Basis services en tools
-    - [Lab-02-01](labs/hoofdstuk-01/lab-02-01.md)  
-    - [Lab-02-02](labs/hoofdstuk-01/lab-02-02.md)  
+    - [Lab-02-01](labs/hoofdstuk-02/lab-02-01.md)  
+    - [Lab-02-02](labs/hoofdstuk-02/lab-02-02.md)  
 -   03 - Communicatieprotocollen
-    - [Lab-03-01](labs/hoofdstuk-01/lab-03-01.md)  
+    - [Lab-03-01](labs/hoofdstuk-03/lab-03-01.md)  
 -   04 - De physical layer
-    - [Lab-04-01](labs/hoofdstuk-01/lab-04-01.md)  
+    - [Lab-04-01](labs/hoofdstuk-04/lab-04-01.md)  
 -   05 - De data link layer
-    - [Lab-05-01](labs/hoofdstuk-01/lab-05-01.md)  
-    - [Lab-05-02](labs/hoofdstuk-01/lab-05-02.md)  
+    - [Lab-05-01](labs/hoofdstuk-05/lab-05-01.md)  
+    - [Lab-05-02](labs/hoofdstuk-05/lab-05-02.md)  
 -   06 - De network layer
-    - [Lab-06-01](labs/hoofdstuk-01/lab-06-01.md)  
-    - [Lab-06-02](labs/hoofdstuk-01/lab-06-02.md)  
-    - [Lab-06-03](labs/hoofdstuk-01/lab-06-03.md)  
+    - [Lab-06-01](labs/hoofdstuk-06/lab-06-01.md)  
+    - [Lab-06-02](labs/hoofdstuk-06/lab-06-02.md)  
+    - [Lab-06-03](labs/hoofdstuk-06/lab-06-03.md)  
 -   07 - Subnetting en vlsm
 -   08 - Routing
-    - [Lab-08-01](labs/hoofdstuk-01/lab-08-01.md)  
-    - [Lab-08-02](labs/hoofdstuk-01/lab-08-02.md)  
-    - [Lab-08-03](labs/hoofdstuk-01/lab-08-03.md)  
+    - [Lab-08-01](labs/hoofdstuk-08/lab-08-01.md)  
+    - [Lab-08-02](labs/hoofdstuk-08/lab-08-02.md)  
+    - [Lab-08-03](labs/hoofdstuk-08/lab-08-03.md)  
 -   09 - De transport layer
-    - [Lab-09-01](labs/hoofdstuk-01/lab-09-01.md)  
-    - [Lab-09-02](labs/hoofdstuk-01/lab-09-02.md)  
+    - [Lab-09-01](labs/hoofdstuk-09/lab-09-01.md)  
+    - [Lab-09-02](labs/hoofdstuk-09/lab-09-02.md)  
 -   10 - NAT
-    - [Lab-10-01](labs/hoofdstuk-01/lab-10-01.md)  
-    - [Lab-10-02](labs/hoofdstuk-01/lab-10-02.md)  
+    - [Lab-10-01](labs/hoofdstuk-10/lab-10-01.md)  
+    - [Lab-10-02](labs/hoofdstuk-10/lab-10-02.md)  
 -   11 - VLANs
-    - [Lab-11-01](labs/hoofdstuk-01/lab-11-01.md)  
-    - [Lab-11-02](labs/hoofdstuk-01/lab-11-02.md)  
-    - [Lab-11-03](labs/hoofdstuk-01/lab-11-03.md)  
+    - [Lab-11-01](labs/hoofdstuk-11/lab-11-01.md)  
+    - [Lab-11-02](labs/hoofdstuk-11/lab-11-02.md)  
+    - [Lab-11-03](labs/hoofdstuk-11/lab-11-03.md)  
 -   12 - Redundantie
-    - [Lab-12-01](labs/hoofdstuk-01/lab-12-01.md)  
-    - [Lab-12-02](labs/hoofdstuk-01/lab-12-02.md)  
+    - [Lab-12-01](labs/hoofdstuk-12/lab-12-01.md)  
+    - [Lab-12-02](labs/hoofdstuk-12/lab-12-02.md)  
 -   13 - Netwerken bouwen
-    - [Lab-13-01](labs/hoofdstuk-01/lab-13-01.md)  
+    - [Lab-13-01](labs/hoofdstuk-13/lab-13-01.md)  
