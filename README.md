@@ -26,6 +26,7 @@ Indien je nog geen ervaring hebt met GNS3 is het aan te raden eerst het introduc
 -   01 - Wat is een netwerk
     - [Lab-01-01](labs/hoofdstuk-01/lab-01-01.md) 
 -   02 - Basis services en tools
+    - [Lab-02-00 - gns3 introductie](labs/gns3-introductie/gns3-introductie.md)  
     - [Lab-02-01](labs/hoofdstuk-02/lab-02-01.md)  
     - [Lab-02-02](labs/hoofdstuk-02/lab-02-02.md)  
 -   03 - Communicatieprotocollen
