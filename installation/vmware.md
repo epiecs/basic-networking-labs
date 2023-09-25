@@ -159,7 +159,7 @@ De oplossing is om al deze features uit te schakelen. Indien je WSL toch nodig h
     ```
     Hyper-V Requirements: VM Monitor Mode Extensions: Yes
                           Virtualization Enabled In Firmware: Yes
-                    	  Second Level Address Translation: Yes
+                          Second Level Address Translation: Yes
                           Data Execution Prevention Available: Yes
     ```
     Als je dit krijgt te zien is alles in orde.
