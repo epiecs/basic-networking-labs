@@ -117,17 +117,67 @@ Mogelijks zijn er nog enkele issues die je kan ervaren wanneer de de virtuele ma
 
 ![Screenshot](../resources/images/gns3-vmware-20.png)
 
-Dit heeft te maken met het feit dat er in jouw windows mogelijks Hyper-V ingeschakeld staat. Dit is omdat onderliggend VmWare gaat proberen Hyper-V te gebruiken. Er zijn verschillende dingen die je kan proberen om dit op te lossen:
+Dit heeft te maken met het feit dat er in jouw windows mogelijks Hyper-V ingeschakeld staat. Hyper-V wordt gebruikt bijvoorbeeld om WSL2 te draaien.
+
+Zodra je Hyper-V installeert laat windows alleen maar toe dat VmWare (of een andere tool) via de WHP Hyper-V api. En deze api ondersteunt geen nested virtualization; iets wat je net nodig hebt om een toestel te kunnen virtualiseren in GNS3.
+
+De oplossing is om al deze features uit te schakelen. Indien je WSL toch nodig hebt kan je dit gebruiken maar enkel dan versie 1.
 
 
-- In een admin cmd prompt "`bcdedit /set hypervisorlaunchtype off`" uitvoeren en de computer herstarten.
-- Virtualization based security uitschakelen.
-    - Winkey + R
-    - Gpedit.msc
-    - `Local Group Policy Editor > Computer Configuration > Administrative Templates > System > Device Guard`
-    - "`Turn On Virtualization Based Security`" uitschakelen
-    - De computer herstarten
-- Add or remove windows features, "`Hyper-V`" en "`Virtual machine platform`"  uitschakelen en de computer herstarten.
+> Let op: Ik ben niet verantwoordelijk voor het verlies van eerder geinstalleerde distributies in WSL. Ik geef je wel de commando's om deze om te vormen naar WSL v1
+
+### Stappen
+
+1. 
+    Deze stap dien je enkel te doen indien je WSL gebruikt. Indien je WSL nog niet hebt maar wel wenst dien je dit eerst te installeren (zie commando's)
+
+    Open een powershell prompt als admin en voer de volgende commando's uit:
+    ```
+    # Enkel indien je WSL wil installeren, we verwijderen ook de standaard oude ubuntu
+    wsl --install
+	wsl --unregister Ubuntu
+
+    # Standaard versie op 1 zetten
+    wsl --set-default-version 1
+    
+    # Zoek de nieuwste ubuntu versie
+	wsl --list --online
+	wsl --install Ubuntu-22.04    
+    ```
+
+    Indien je bestaande distros heb kan je deze omvormen met `wsl --set-version <distro_name> 1`
+
+    Het is heel belangrijk dat alle distros versie 1 zijn. Zo lang er nog maar 1 distro is in versie 2 werken de volgende stappen niet.
+2. 
+    Open het startmenu en zoek op Features. Selecteer de optie met `Add or remove Windows Features`
+    - Verwijder de features `Hyper-V`, `Virtual Machine Platform` en `Windows Hypervisor Platform`
+    - Enable de `Windows Subsystem for Linux` feature - enkel als je wsl1 wenst te gebruiken
+3. 
+    Herstart je computer
+4. 
+    Open een `cmd` prompt en run het commando `systeminfo.exe`. Normaal moet je onderaan de volgende output zien:
+    ```
+    Hyper-V Requirements: VM Monitor Mode Extensions: Yes
+                          Virtualization Enabled In Firmware: Yes
+                    	  Second Level Address Translation: Yes
+                          Data Execution Prevention Available: Yes
+    ```
+    Als je dit krijgt te zien is alles in orde.
+
+    Mogelijks indien WSL2 nog draait gaat dit niet lukken. In dit geval moet je ofwel eerst WSL2 verwijderen, ofwel de stappen opnieuw proberen.
+5. 
+    Run in een elevated powershell prompt `bcdedit /set hypervisorlaunchtype off` om er voor te zorgen dat Hyper-V niet automatisch mee op start
+6. 
+    Zorg er voor dat in de instellingen van de virtuele machine de instelling `Virtualize Intel VT-x/EPT or AMD-V/RVI` ingeschakeld is onder `processor`
+7. 
+    In sommige gevallen moet je device guard uitschakelen
+    - Virtualization based security uitschakelen.
+        - Winkey + R
+        - `gpedit.msc`
+        - `Local Group Policy Editor > Computer Configuration > Administrative Templates > System > Device Guard`
+        - "`Turn On Virtualization Based Security`" uitschakelen
+        - De computer herstarten
+
 
 Referentie links:
 - https://kb.vmware.com/s/article/2146361
