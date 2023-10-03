@@ -117,69 +117,88 @@ Mogelijks zijn er nog enkele issues die je kan ervaren wanneer de de virtuele ma
 
 ![Screenshot](../resources/images/gns3-vmware-20.png)
 
-Dit heeft te maken met het feit dat er in jouw windows mogelijks Hyper-V ingeschakeld staat. Hyper-V wordt gebruikt bijvoorbeeld om WSL2 te draaien.
+Dit heeft te maken met het feit dat er in jouw windows mogelijks Hyper-V ingeschakeld staat. Dit is omdat onderliggend VmWare gaat proberen Hyper-V te gebruiken. Voor normale virtuele machines is dit geen probleem - echter heb je voor GNS3 nested virtualisation nodig, wat niet gaat werken.
 
-Zodra je Hyper-V installeert laat windows alleen maar toe dat VmWare (of een andere tool) via de WHP Hyper-V api. En deze api ondersteunt geen nested virtualization; iets wat je net nodig hebt om een toestel te kunnen virtualiseren in GNS3.
+De enige oplossing is om Hyper-V volledig te verwijderen spijtig genoeg. Een euvel hierbij is wel dat je enkel nog gebruik kan maken van WSL v1.
 
-De oplossing is om al deze features uit te schakelen. Indien je WSL toch nodig hebt kan je dit gebruiken maar enkel dan versie 1.
+> **Let op:** Om deze stappen te volgen moet je bepaalde security instellingen wijzigen. Evalueer dit zeker ten op zichte van jouw eigen security posture.
+>
+> Tevens gaan we voor de zekerheid alles verwijderen  van WSL. Je kan dus mogelijks al jouw WSL distro's verliezen! Mocht je toch willen gebruik maken van WSL dan kan je je distros omvormen naar versie 1. Refereer hiervoor naar het **WSL v1 installeren**.
 
+Je moet de volgende stappen volgen:
 
-> Let op: Ik ben niet verantwoordelijk voor het verlies van eerder geinstalleerde distributies in WSL. Ik geef je wel de commando's om deze om te vormen naar WSL v1
+- Bitlocker uitschakelen; indien je dit gebruikt.
 
-### Stappen
+  - Je kan de voortgang hier van volgen met het `manage-bde -status` commando. Zodra de teller 0,0% bereikt is alles klaar.
 
-1. 
-    Deze stap dien je enkel te doen indien je WSL gebruikt. Indien je WSL nog niet hebt maar wel wenst dien je dit eerst te installeren (zie commando's)
+- Secure boot uitschakelen
 
-    Open een powershell prompt als admin en voer de volgende commando's uit:
-    ```
-    # Enkel indien je WSL wil installeren, we verwijderen ook de standaard oude ubuntu
-    wsl --install
-	wsl --unregister Ubuntu
+  - Dit is anders voor elke machine. Je kan dit vinden in jouw UEFI.
 
-    # Standaard versie op 1 zetten
-    wsl --set-default-version 1
-    
-    # Zoek de nieuwste ubuntu versie
-	wsl --list --online
-	wsl --install Ubuntu-22.04    
-    ```
+- In jouw Microsoft Defender de optie **memory integrity** uitschakelen. Je kan deze vinden onder `Device security > memory integrity details`
 
-    Indien je bestaande distros heb kan je deze omvormen met `wsl --set-version <distro_name> 1`
+- De volgende 2 register sleutels verwijderen met `regedit`
 
-    Het is heel belangrijk dat alle distros versie 1 zijn. Zo lang er nog maar 1 distro is in versie 2 werken de volgende stappen niet.
-2. 
-    Open het startmenu en zoek op Features. Selecteer de optie met `Add or remove Windows Features`
-    - Verwijder de features `Hyper-V`, `Virtual Machine Platform` en `Windows Hypervisor Platform`
-    - Enable de `Windows Subsystem for Linux` feature - enkel als je wsl1 wenst te gebruiken
-3. 
-    Herstart je computer
-4. 
-    Open een `cmd` prompt en run het commando `systeminfo.exe`. Normaal moet je onderaan de volgende output zien:
-    ```
-    Hyper-V Requirements: VM Monitor Mode Extensions: Yes
-                          Virtualization Enabled In Firmware: Yes
-                          Second Level Address Translation: Yes
-                          Data Execution Prevention Available: Yes
-    ```
-    Als je dit krijgt te zien is alles in orde.
+  - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard\EnableVirtualizationBasedSecurity`
+  - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard\RequirePlatformSecurityFeatures`
 
-    Mogelijks indien WSL2 nog draait gaat dit niet lukken. In dit geval moet je ofwel eerst WSL2 verwijderen, ofwel de stappen opnieuw proberen.
-5. 
-    Run in een elevated powershell prompt `bcdedit /set hypervisorlaunchtype off` om er voor te zorgen dat Hyper-V niet automatisch mee op start
-6. 
-    Zorg er voor dat in de instellingen van de virtuele machine de instelling `Virtualize Intel VT-x/EPT or AMD-V/RVI` ingeschakeld is onder `processor`
-7. 
-    In sommige gevallen moet je device guard uitschakelen
-    - Virtualization based security uitschakelen.
-        - Winkey + R
-        - `gpedit.msc`
-        - `Local Group Policy Editor > Computer Configuration > Administrative Templates > System > Device Guard`
-        - "`Turn On Virtualization Based Security`" uitschakelen
-        - De computer herstarten
+- De nodige windows features verwijderen. Dit kan zowel manueel via de GUI of via powershell
+
+  - In de **turn windows features on or off** gui moet je enkele features uitschakelen. Mogelijks bestaan deze niet allemaal op jou systeem.
+
+    - `Hyper-V`, `Virtual Machine Platform`, `Windows Hypervisor Platform` en `Windows Sybsystem for Linux`.
+
+  - Via een powershell admin prompt doe je dit met de volgende commandos:
+
+    - ```powershell
+      Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Hypervisor
+      Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
+      Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+      ```
+
+- Zorg er voor dat Hyper-V niet automatisch mee opstart. Voer dit uit in een powershell admin prompt
+
+  - `bcdedit /set hypervisorlaunchtype off`
 
 
-Referentie links:
-- https://kb.vmware.com/s/article/2146361
-- https://docs.microsoft.com/en-us/troubleshoot/windows-client/application-management/virtualization-apps-not-work-with-hyper-v
-- https://blogs.vmware.com/workstation/2020/05/vmware-workstation-now-supports-hyper-v-mode.html
+- De computer herstarten
+
+- Voer in een powershell admin prompt het commando `systeminfo` uit. Normaal moet je onderaan de volgende output krijgen
+
+
+    - ```
+        Hyper-V Requirements:      VM Monitor Mode Extensions: Yes
+                                   Virtualization Enabled In Firmware: Yes
+                                   Second Level Address Translation: Yes
+                                   Data Execution Prevention Available: Yes
+        ```
+
+    - Als je bovenstaande output krijgt te zien is alles in orde.
+
+
+#### WSL v1 installeren
+
+Indien je bovenstaande stappen hebt gevolgd heb je geen WSL meer op jouw machine. Je kan WSL1 als volgt installeren in een powershell admin prompt:
+
+```powershell
+wsl --install
+wsl --set-default-version 1
+wsl --unregister Ubuntu
+wsl --list --online
+wsl --install Ubuntu-22.04
+```
+
+Indien je **bestaande distros hebt** kan je deze omvormen naar WSL v1:
+
+```powershell
+wsl --list
+# Voor alle distros
+wsl --set-version <distro_name> 1
+
+# WSL standaard op versie 1 zetten
+wsl --set-default-version 1
+```
+
+Referente links:
+
+- https://learn.microsoft.com/en-us/windows/security/identity-protection/credential-guard/configure?tabs=intune
