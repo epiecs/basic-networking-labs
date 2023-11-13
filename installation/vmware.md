@@ -178,14 +178,27 @@ Je moet de volgende stappen volgen:
 
 #### WSL v1 installeren
 
+Let op, niet alle commando's hieronder gaan werken wanneer niet alle componenten geinstalleerd zijn. Op het einde gaat dit sowiezo in orde zijn.
+
 Indien je bovenstaande stappen hebt gevolgd heb je geen WSL meer op jouw machine. Je kan WSL1 als volgt installeren in een powershell admin prompt:
 
 ```powershell
-wsl --install
+# Voor de zekerheid mocht er al een wsl install zijn
 wsl --set-default-version 1
-wsl --unregister Ubuntu
-wsl --list --online
+
+## WSL runtime installeren
+# Windows 10 installeert versie 1 standaard
+wsl --install --no-distribution
+# Windows 11 moet je WSL v1 forceren
+wsl --install --enable-wsl1 --no-distribution
+
+# Mocht je bestaande distributions hebben
 wsl --install Ubuntu-22.04
+wsl --unregister Ubuntu
+
+# Kijken wat bestaat
+wsl --list --online
+wsl --install -d Ubuntu-22.04
 ```
 
 Indien je **bestaande distros hebt** kan je deze omvormen naar WSL v1:
