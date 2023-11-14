@@ -51,6 +51,7 @@ Indien je nog geen ervaring hebt met GNS3 is het aan te raden eerst het introduc
 -   10 - NAT
     - [Lab-10-01](labs/hoofdstuk-10/lab-10-01.md)  
     - [Lab-10-02](labs/hoofdstuk-10/lab-10-02.md)  
+    - [Lab-10-03](labs/hoofdstuk-10/lab-10-03.md)  
 -   11 - VLANs
     - [Lab-11-01](labs/hoofdstuk-11/lab-11-01.md)  
     - [Lab-11-02](labs/hoofdstuk-11/lab-11-02.md)  
